@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../Context/AuthContext";
-import StatsCard  from "../components/StatsCard";
+import StatsCard from "../components/StatsCard";
+import ApplicationFunnel from "../components/ApplicationFunnel";
+import ApplicationsOverTime from "../components/ApplicationsOverTime";
 
 function Dashboard() {
     const { token } = useAuth();
@@ -8,6 +10,8 @@ function Dashboard() {
     const [loading, setLoading] = useState(true);
 
     const [error, setError] = useState("");
+    const[monthlyData, setMonthlyData] = useState([]);
+
 
     useEffect(() => {
         const fetchstats = async () => {
@@ -47,13 +51,48 @@ function Dashboard() {
             fetchstats();
         }
     }, [token]);
-    if (loading) {
+   
+
+
+    useEffect(() => {
+        if (!token) return;
+
+        const fetchMonthlyApplications = async () => {
+            try {
+                const response = await fetch(
+                    "http://127.0.0.1:8000/dashboard/applications-over-time",
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(
+                        data.detail || "Failed to fetch monthly applications"
+                    );
+                }
+
+                setMonthlyData(data);
+            } catch (error) {
+                console.error("Monthly applications error:", error);
+            }
+        };
+
+        fetchMonthlyApplications();
+    }, [token]);
+
+     if (loading) {
         return <p>Loading dashboard...</p>;
     }
 
     if (error) {
         return <p>{error}</p>;
     }
+
     return (
         <div >
             <h1>Dashboard</h1>
@@ -66,19 +105,22 @@ function Dashboard() {
 
                 <StatsCard
                     title="Interviews"
-                    value = {stats.interviews}
+                    value={stats.interviews}
                 />
 
                 <StatsCard
-                    title = "Offers"
+                    title="Offers"
                     value={stats.offers}
                 />
 
                 <StatsCard
                     title="Accepted"
-                    value = {stats.accepted}
+                    value={stats.accepted}
                 />
             </div>
+            <ApplicationFunnel stats={stats} />
+            <ApplicationsOverTime data={monthlyData} />
+
         </div>
     );
 }
