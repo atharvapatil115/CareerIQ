@@ -3,6 +3,7 @@ import { useAuth } from "../Context/AuthContext";
 import StatsCard from "../components/StatsCard";
 import ApplicationFunnel from "../components/ApplicationFunnel";
 import ApplicationsOverTime from "../components/ApplicationsOverTime";
+import TopCompaniesChart from "../components/TopCompaniesChart";
 
 function Dashboard() {
     const { token } = useAuth();
@@ -10,7 +11,10 @@ function Dashboard() {
     const [loading, setLoading] = useState(true);
 
     const [error, setError] = useState("");
-    const[monthlyData, setMonthlyData] = useState([]);
+    const [monthlyData, setMonthlyData] = useState([]);
+    const [topCompanies, setTopCompanies] = useState([]);
+    const [companiesLoading, setCompaniesLoading] = useState(true);
+    const [companiesError, setCompaniesError] = useState("");
 
 
     useEffect(() => {
@@ -51,7 +55,7 @@ function Dashboard() {
             fetchstats();
         }
     }, [token]);
-   
+
 
 
     useEffect(() => {
@@ -84,8 +88,45 @@ function Dashboard() {
 
         fetchMonthlyApplications();
     }, [token]);
+    useEffect(() => {
+        if (!token) {
+            setCompaniesLoading(false);
+            return;
+        }
 
-     if (loading) {
+        const fetchTopCompanies = async () => {
+            try {
+                const response = await fetch(
+                    "http://127.0.0.1:8000/dashboard/top-companies",
+                    {
+                        method: "GET",
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(
+                        data.detail || "Failed to fetch top companies"
+                    );
+                }
+
+                setTopCompanies(data);
+            } catch (error) {
+                console.error("Top companies error:", error);
+                setCompaniesError(error.message);
+            } finally {
+                setCompaniesLoading(false);
+            }
+        };
+
+        fetchTopCompanies();
+    }, [token]);
+
+    if (loading) {
         return <p>Loading dashboard...</p>;
     }
 
@@ -120,6 +161,11 @@ function Dashboard() {
             </div>
             <ApplicationFunnel stats={stats} />
             <ApplicationsOverTime data={monthlyData} />
+            <TopCompaniesChart
+                data={topCompanies}
+                loading={companiesLoading}
+                error={companiesError}
+            />
 
         </div>
     );

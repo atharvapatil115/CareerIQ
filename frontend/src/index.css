@@ -170,3 +170,261 @@ body {
   margin-bottom: 20px;
   font-size: 20px;
 }
+
+
+/* Jobs page */
+.jobs-page {
+  width: 100%;
+}
+
+.jobs-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.jobs-page-header h1 {
+  margin: 0 0 8px;
+}
+
+.jobs-page-header p {
+  margin: 0;
+  color: #64748b;
+}
+
+.jobs-count {
+  white-space: nowrap;
+  padding: 8px 14px;
+  border-radius: 20px;
+  background: #e8efff;
+  color: #244fc5;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.jobs-table-container {
+  width: 100%;
+  overflow-x: auto;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.jobs-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.jobs-table th,
+.jobs-table td {
+  padding: 16px;
+  border-bottom: 1px solid #edf0f5;
+  white-space: nowrap;
+}
+
+.jobs-table th {
+  background: #f8fafc;
+  color: #64748b;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.jobs-table td {
+  font-size: 14px;
+  color: #334155;
+}
+
+.jobs-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.jobs-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.company-name {
+  font-weight: 600;
+  color: #0f172a !important;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 5px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.status-applied {
+  color: #1d4ed8;
+  background: #dbeafe;
+}
+
+.status-interview {
+  color: #92400e;
+  background: #fef3c7;
+}
+
+.status-offer,
+.status-accepted {
+  color: #166534;
+  background: #dcfce7;
+}
+
+.status-rejected,
+.status-withdrawn {
+  color: #991b1b;
+  background: #fee2e2;
+}
+
+.empty-state {
+  padding: 48px 20px;
+  text-align: center;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.error-message {
+  color: #b91c1c;
+}
+
+@media (max-width: 768px) {
+  .jobs-page-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .jobs-table th,
+  .jobs-table td {
+    padding: 12px;
+  }
+}
+.jobs-page-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.add-job-button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.add-job-button:hover {
+  background: #1d4ed8;
+}
+
+.add-job-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.job-form {
+  padding: 24px;
+  margin-bottom: 24px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.job-form h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.job-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.job-form-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.job-form-grid input,
+.job-form-grid select,
+.job-form-grid textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  background: white;
+  color: #0f172a;
+  font: inherit;
+}
+
+.job-form-grid input:focus,
+.job-form-grid select:focus,
+.job-form-grid textarea:focus {
+  outline: 2px solid #93c5fd;
+  border-color: #2563eb;
+}
+
+.job-form-grid .job-form-full {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 600px) {
+  .jobs-page-actions {
+    flex-wrap: wrap;
+  }
+
+  .job-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.delete-job-button {
+  padding: 7px 11px;
+  border: 1px solid #fecaca;
+  border-radius: 7px;
+  background: #fff1f2;
+  color: #be123c;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.delete-job-button:hover {
+  background: #ffe4e6;
+}
+
+.delete-job-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.edit-job-button {
+  padding: 7px 11px;
+  margin-right: 8px;
+  border: 1px solid #bfdbfe;
+  border-radius: 7px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.edit-job-button:hover {
+  background: #dbeafe;
+}
