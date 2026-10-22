@@ -26,7 +26,8 @@ function ApplicationFunnel({ stats }) {
           <XAxis dataKey="status" />
           <YAxis allowDecimals={false} />
           <Tooltip />
-          <Bar dataKey="value" />
+          <Bar dataKey="value"  fill="#2563eb"
+/>
         </BarChart>
       </ResponsiveContainer>
     </div>

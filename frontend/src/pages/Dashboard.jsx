@@ -21,7 +21,7 @@ function Dashboard() {
         const fetchstats = async () => {
             try {
                 const response = await fetch(
-                    "http://127.0.0.1:8000/dashboard/stats",
+                    "/api/dashboard/stats",
                     {
                         method: "GET",
                         headers: {
@@ -64,7 +64,7 @@ function Dashboard() {
         const fetchMonthlyApplications = async () => {
             try {
                 const response = await fetch(
-                    "http://127.0.0.1:8000/dashboard/applications-over-time",
+                    "/api/dashboard/applications-over-time",
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
@@ -97,7 +97,7 @@ function Dashboard() {
         const fetchTopCompanies = async () => {
             try {
                 const response = await fetch(
-                    "http://127.0.0.1:8000/dashboard/top-companies",
+                    "/api/dashboard/top-companies",
                     {
                         method: "GET",
                         headers: {

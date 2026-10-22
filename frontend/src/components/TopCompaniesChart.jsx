@@ -40,7 +40,7 @@ function TopCompaniesChart({ data, loading, error }) {
 
             <Bar
               dataKey="applications"
-              fill="#3984e8"
+              fill="#75a9ee"
               radius={[0, 5, 5, 0]}
             />
           </BarChart>

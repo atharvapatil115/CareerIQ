@@ -1,9 +1,9 @@
-import { createContext, useContext, useState ,useEffect} from "react";
+
+import { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-
     const [token, setToken] = useState(
         localStorage.getItem("access_token")
     );
@@ -15,40 +15,38 @@ export function AuthProvider({ children }) {
         formData.append("username", email);
         formData.append("password", password);
 
-        const response = await fetch(
-            "http://127.0.0.1:8000/auth/login",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-                body: formData,
-            }
-        );
+        const response = await fetch("/api/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: formData,
+        });
+
         const data = await response.json();
 
         if (!response.ok) {
             throw new Error(data.detail || "Login Failed");
         }
+
         const newToken = data.access_token;
 
         localStorage.setItem("access_token", newToken);
         setToken(newToken);
 
-        const profileResponse = await fetch(
-            "http://127.0.0.1:8000/users/me",
-            {
-                method: "GET",
-                headers: {
-                    Authorization: `Bearer ${newToken}`,
-                },
-            }
-        );
+        const profileResponse = await fetch("/api/users/me", {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${newToken}`,
+            },
+        });
 
         const userData = await profileResponse.json();
 
         if (!profileResponse.ok) {
-            throw new Error(userData.detail || "Failed to fetch user profile");
+            throw new Error(
+                userData.detail || "Failed to fetch user profile"
+            );
         }
 
         setUser(userData);
@@ -56,63 +54,52 @@ export function AuthProvider({ children }) {
         return userData;
     };
 
-
     const logout = () => {
-
         localStorage.removeItem("access_token");
         setToken(null);
         setUser(null);
     };
 
-      useEffect(() => {
-    const restoreUser = async () => {
-      const storedToken = localStorage.getItem("access_token");
+    useEffect(() => {
+        const restoreUser = async () => {
+            const storedToken = localStorage.getItem("access_token");
 
-      if (!storedToken) {
-        setIsLoading(false);
-        return;
-      }
+            if (!storedToken) {
+                setIsLoading(false);
+                return;
+            }
 
-      try {
-        const response = await fetch(
-          "http://127.0.0.1:8000/users/me",
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${storedToken}`,
-            },
-          }
-        );
+            try {
+                const response = await fetch("/api/users/me", {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${storedToken}`,
+                    },
+                });
 
-        if (!response.ok) {
-          throw new Error("Invalid or expired token");
-        }
+                if (!response.ok) {
+                    throw new Error("Invalid or expired token");
+                }
 
-        const userData = await response.json();
+                const userData = await response.json();
 
-        setToken(storedToken);
-        setUser(userData);
+                setToken(storedToken);
+                setUser(userData);
+            } catch (error) {
+                console.error("Session restoration failed:", error);
 
-      } catch (error) {
-        console.error("Session restoration failed:", error);
+                localStorage.removeItem("access_token");
+                setToken(null);
+                setUser(null);
+            } finally {
+                setIsLoading(false);
+            }
+        };
 
-        localStorage.removeItem("access_token");
+        restoreUser();
+    }, []);
 
-        setToken(null);
-        setUser(null);
-
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    restoreUser();
-  }, []);
-
-
-    const isAuthenticated = !!token
-
-
+    const isAuthenticated = !!token;
 
     return (
         <AuthContext.Provider
@@ -120,6 +107,7 @@ export function AuthProvider({ children }) {
                 token,
                 user,
                 isAuthenticated,
+                isLoading,
                 login,
                 logout,
             }}
@@ -127,12 +115,8 @@ export function AuthProvider({ children }) {
             {children}
         </AuthContext.Provider>
     );
-
-
 }
-
 
 export function useAuth() {
     return useContext(AuthContext);
 }
-

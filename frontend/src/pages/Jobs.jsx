@@ -47,7 +47,7 @@ function Jobs() {
         setError("");
 
         const response = await fetch(
-          "http://127.0.0.1:8000/jobs/",
+          "/api/jobs/",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -111,11 +111,11 @@ function Jobs() {
     setSaving(true);
     setFormError("");
 
+    const salaryText = String(formData.salary ?? "").trim();
+
     const payload = {
       ...formData,
-      salary: formData.salary.trim() === ""
-        ? null
-        : Number(formData.salary),
+      salary: salaryText === "" ? null : Number(salaryText),
       date_applied: formData.date_applied || null,
     };
 
@@ -123,8 +123,8 @@ function Jobs() {
       const isEditing = editingJobId !== null;
 
       const url = isEditing
-        ? `http://127.0.0.1:8000/jobs/${editingJobId}`
-        : "http://127.0.0.1:8000/jobs/";
+        ? `/api/jobs/${editingJobId}`
+        : "/api/jobs/";
 
       const response = await fetch(url, {
         method: isEditing ? "PUT" : "POST",
@@ -187,7 +187,7 @@ function Jobs() {
 
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/jobs/${jobId}`,
+        `/api/jobs/${jobId}`,
         {
           method: "DELETE",
           headers: {
