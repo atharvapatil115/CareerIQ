@@ -34,6 +34,10 @@ function AppLayout()
             Profile
           </NavLink>
 
+          <NavLink className="sidebar-link" to="/discover-jobs">
+            Discover Jobs
+          </NavLink>
+
           <button className="logout-button" onClick={handleLogout}>
             Logout
           </button>

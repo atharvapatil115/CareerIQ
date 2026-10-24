@@ -1,27 +1,38 @@
-import {Routes,Route,Navigate} from "react-router";
+
+import { Routes, Route, Navigate } from "react-router";
+
 import TempLogin from "./components/TempLogin";
+import Register from "./components/Register";
+import Navbar from "./components/Navbar";
+import ProtectedRoute from "./components/ProtectedRoute";
+import AppLayout from "./components/AppLayout";
+
 import Dashboard from "./pages/Dashboard";
 import Jobs from "./pages/Jobs";
 import Profile from "./pages/Profile";
-import Navbar from "./components/Navbar";
-import ProtectedRoute from "./components/ProtectedRoute";
-import AppLayout  from "./components/AppLayout";
-import Register from "./components/Register";
+import DiscoverJobs from "./pages/DiscoverJobs";
 
-function App()
-{
-   return (
+function App() {
+  return (
     <Routes>
-      <Route path="/" element={<Navigate to="/login" replace />} />
+      {/* Default route */}
+      <Route
+        path="/"
+        element={<Navigate to="/login" replace />}
+      />
+
+      {/* Public routes */}
       <Route
         path="/login"
         element={<TempLogin />}
       />
+
       <Route
         path="/register"
         element={<Register />}
       />
 
+      {/* Protected routes with shared layout */}
       <Route
         element={
           <ProtectedRoute>
@@ -43,9 +54,14 @@ function App()
           path="/profile"
           element={<Profile />}
         />
-      </Route>
 
+        <Route
+          path="/discover-jobs"
+          element={<DiscoverJobs />}
+        />
+      </Route>
     </Routes>
   );
 }
+
 export default App;

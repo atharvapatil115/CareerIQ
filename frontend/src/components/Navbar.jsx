@@ -12,6 +12,7 @@ function Navbar({ username }) {
         <Link to="/dashboard">Dashboard</Link>
         <Link to="/jobs">Jobs</Link>
         <Link to="/profile">Profile</Link>
+        <Link to="/discover-jobs">Profile</Link>
       </div>
     </nav>
   );
