@@ -15,7 +15,7 @@ export function AuthProvider({ children }) {
         formData.append("username", email);
         formData.append("password", password);
 
-        const response = await fetch(apiUrl("/users/me"), {           
+        const response = await fetch(apiUrl("/auth/login"), {           
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
