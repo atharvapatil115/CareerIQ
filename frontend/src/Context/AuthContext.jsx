@@ -1,6 +1,6 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
-
+import { apiUrl } from "../api";
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
@@ -15,7 +15,7 @@ export function AuthProvider({ children }) {
         formData.append("username", email);
         formData.append("password", password);
 
-        const response = await fetch("/api/auth/login", {
+        const response = await fetch(apiUrl("/users/me"), {           
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
@@ -34,7 +34,7 @@ export function AuthProvider({ children }) {
         localStorage.setItem("access_token", newToken);
         setToken(newToken);
 
-        const profileResponse = await fetch("/api/users/me", {
+        const profileResponse = await fetch(apiUrl("/users/me"), {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${newToken}`,
@@ -70,7 +70,7 @@ export function AuthProvider({ children }) {
             }
 
             try {
-                const response = await fetch("/api/users/me", {
+                const response = await fetch(apiUrl("/users/me"), {
                     method: "GET",
                     headers: {
                         Authorization: `Bearer ${storedToken}`,

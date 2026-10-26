@@ -4,6 +4,7 @@ import StatsCard from "../components/StatsCard";
 import ApplicationFunnel from "../components/ApplicationFunnel";
 import ApplicationsOverTime from "../components/ApplicationsOverTime";
 import TopCompaniesChart from "../components/TopCompaniesChart";
+import { apiUrl } from "../api";
 
 function Dashboard() {
     const { token } = useAuth();
@@ -20,9 +21,7 @@ function Dashboard() {
     useEffect(() => {
         const fetchstats = async () => {
             try {
-                const response = await fetch(
-                    "/api/dashboard/stats",
-                    {
+                const response = await fetch(apiUrl("/dashboard/stats"), {
                         method: "GET",
                         headers: {
                             Authorization: `Bearer ${token}`,
@@ -63,9 +62,7 @@ function Dashboard() {
 
         const fetchMonthlyApplications = async () => {
             try {
-                const response = await fetch(
-                    "/api/dashboard/applications-over-time",
-                    {
+                const response = await fetch(apiUrl("/dashboard/applications-over-time"), {
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },
@@ -96,9 +93,7 @@ function Dashboard() {
 
         const fetchTopCompanies = async () => {
             try {
-                const response = await fetch(
-                    "/api/dashboard/top-companies",
-                    {
+                const response = await fetch(apiUrl("/dashboard/top-companies"), {
                         method: "GET",
                         headers: {
                             Authorization: `Bearer ${token}`,

@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "../Context/AuthContext";
-
+import { apiUrl } from "../api";
 
 const initialFormData = {
   company: "",
@@ -47,7 +47,7 @@ function Jobs() {
         setError("");
 
         const response = await fetch(
-          "/api/jobs/",
+          apiUrl("/jobs/"),
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -123,8 +123,8 @@ function Jobs() {
       const isEditing = editingJobId !== null;
 
       const url = isEditing
-        ? `/api/jobs/${editingJobId}`
-        : "/api/jobs/";
+        ? apiUrl(`/jobs/${editingJobId}`)
+        : apiUrl("/jobs/");
 
       const response = await fetch(url, {
         method: isEditing ? "PUT" : "POST",
@@ -187,7 +187,7 @@ function Jobs() {
 
     try {
       const response = await fetch(
-        `/api/jobs/${jobId}`,
+       apiUrl(`/jobs/${jobId}`),
         {
           method: "DELETE",
           headers: {

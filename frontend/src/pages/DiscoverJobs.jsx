@@ -1,5 +1,6 @@
 
 import { useEffect, useMemo, useState } from "react";
+import { apiUrl } from "../api";
 
 function DiscoverJobs() {
   const [jobs, setJobs] = useState([]);
@@ -14,8 +15,7 @@ function DiscoverJobs() {
       setError("");
       setLoading(true);
 
-      const response = await fetch("/api/discovered-jobs/");
-
+const response = await fetch(apiUrl("/discovered-jobs/"));
       if (!response.ok) {
         throw new Error("Could not load jobs. Please try again.");
       }

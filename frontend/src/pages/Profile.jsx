@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "../Context/AuthContext";
+import { apiUrl } from "../api";
 
-const API = "/api";
 
 async function getErrorMessage(response, fallback) {
     const data = await response.json().catch(() => null);
@@ -46,7 +46,7 @@ function Profile() {
 
         async function loadProfile() {
             try {
-                const response = await fetch(`${API}/users/me`, {
+                const response = await fetch(apiUrl("/users/me"), {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -112,7 +112,7 @@ function Profile() {
         setProfileError("");
 
         try {
-            const response = await fetch(`${API}/users/me`, {
+            const response = await fetch(apiUrl("/users/me"), {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -174,7 +174,7 @@ function Profile() {
 
         try {
             const response = await fetch(
-                `${API}/users/me/update_password`,
+                apiUrl("/users/me/update_password"),
                 {
                     method: "PUT",
                     headers: {
@@ -223,7 +223,7 @@ function Profile() {
         setDeleteError("");
 
         try {
-            const response = await fetch(`${API}/users/me`, {
+            const response = await fetch(apiUrl("/users/me"), {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`,

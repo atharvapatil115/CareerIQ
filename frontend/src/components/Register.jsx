@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "../Context/AuthContext";
+import { apiUrl } from "../api";
 
-const API = "http://127.0.0.1:8000";
 
 function getApiError(data, fallback) {
   const detail = data?.detail;
@@ -67,7 +67,7 @@ function Register() {
     setSubmitting(true);
 
     try {
-      const response = await fetch(`${API}/users/`, {
+      const response = await fetch(apiUrl("/users/"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

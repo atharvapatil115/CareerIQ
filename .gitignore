@@ -1,3 +1,14 @@
+# Environment variables and secrets
 .env
-venv/
+.env.*
+!.env.example
+
+# Python
 __pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# React / Node.js
+node_modules/
+dist/

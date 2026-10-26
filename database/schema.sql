@@ -1,20 +1,26 @@
--- CREATE TABLE jobs(
---     id Integer generated always as identity primary key,
---     company varchar(100) not null,
---     job_role  varchar(100) not null, 
---     location varchar(100) not null,
---     salary integer,
---     status varchar(50) not null,
---     date_applied date,
---     notes text
--- );
 
--- CREATE TABLE users(
---     user_id integer generated always as identity primary key,
---     name varchar(100) not null,
---     email varchar(150) not null,
---     password_hash varchar(255) not null
--- );
+CREATE TABLE users (
+    user_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE jobs (
+    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    company VARCHAR(100) NOT NULL,
+    job_role VARCHAR(100) NOT NULL,
+    location VARCHAR(100) NOT NULL,
+    salary INTEGER,
+    status VARCHAR(50) NOT NULL,
+    date_applied DATE,
+    notes TEXT,
+    user_id INTEGER NOT NULL,
+    CONSTRAINT fk_jobs_user
+        FOREIGN KEY (user_id)
+        REFERENCES users(user_id)
+        ON DELETE CASCADE
+);
 
 
 CREATE TABLE discovered_jobs (
