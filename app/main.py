@@ -8,6 +8,9 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 import os
 
+
+from fastapi.middleware.cors import CORSMiddleware
+
 allowed_origins = [
     "http://localhost:5173",
     "https://job-intelligence-indol.vercel.app",
@@ -20,6 +23,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 @app.get("/")
 def home():
