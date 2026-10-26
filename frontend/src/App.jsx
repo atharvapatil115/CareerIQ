@@ -17,6 +17,7 @@ import LoginLoadingOverlay from "./components/LoginLoadingOverlay";
 function App() {
   const { isLoggingIn } = useAuth();
   return (
+    <>
     <Routes>
       {/* Default route */}
       <Route
@@ -63,8 +64,9 @@ function App() {
           element={<DiscoverJobs />}
         />
       </Route>
-       {isLoggingIn && <LoginLoadingOverlay />}
     </Routes>
+       {isLoggingIn && <LoginLoadingOverlay />}
+       </>
     
   );
 }
