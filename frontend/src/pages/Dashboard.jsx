@@ -5,7 +5,7 @@ import ApplicationFunnel from "../components/ApplicationFunnel";
 import ApplicationsOverTime from "../components/ApplicationsOverTime";
 import TopCompaniesChart from "../components/TopCompaniesChart";
 import { apiUrl } from "../api";
-import Loader from "./components/Loader";
+import Loader from "../components/Loader";
 
 function Dashboard() {
     const { token } = useAuth();
