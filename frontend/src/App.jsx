@@ -6,7 +6,7 @@ import Register from "./components/Register";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AppLayout from "./components/AppLayout";
-
+import { useAuth } from "./Context/AuthContext";
 import Dashboard from "./pages/Dashboard";
 import Jobs from "./pages/Jobs";
 import Profile from "./pages/Profile";
