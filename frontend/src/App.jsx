@@ -11,8 +11,11 @@ import Dashboard from "./pages/Dashboard";
 import Jobs from "./pages/Jobs";
 import Profile from "./pages/Profile";
 import DiscoverJobs from "./pages/DiscoverJobs";
+import LoginLoadingOverlay from "./components/LoginLoadingOverlay";
+
 
 function App() {
+  const { isLoggingIn } = useAuth();
   return (
     <Routes>
       {/* Default route */}
@@ -60,7 +63,9 @@ function App() {
           element={<DiscoverJobs />}
         />
       </Route>
+       {isLoggingIn && <LoginLoadingOverlay />}
     </Routes>
+    
   );
 }
 

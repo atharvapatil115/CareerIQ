@@ -1,6 +1,7 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
 import { apiUrl } from "../api";
+
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
@@ -9,49 +10,56 @@ export function AuthProvider({ children }) {
     );
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [isLoggingIn, setIsLoggingIn] = useState(false);
 
     const login = async (email, password) => {
-        const formData = new URLSearchParams();
-        formData.append("username", email);
-        formData.append("password", password);
+        setIsLoggingIn(true);
 
-        const response = await fetch(apiUrl("/auth/login"), {           
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: formData,
-        });
+        try {
+            const formData = new URLSearchParams();
+            formData.append("username", email);
+            formData.append("password", password);
 
-        const data = await response.json();
+            const response = await fetch(apiUrl("/auth/login"), {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: formData,
+            });
 
-        if (!response.ok) {
-            throw new Error(data.detail || "Login Failed");
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.detail || "Login Failed");
+            }
+
+            const newToken = data.access_token;
+
+            localStorage.setItem("access_token", newToken);
+            setToken(newToken);
+
+            const profileResponse = await fetch(apiUrl("/users/me"), {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${newToken}`,
+                },
+            });
+
+            const userData = await profileResponse.json();
+
+            if (!profileResponse.ok) {
+                throw new Error(
+                    userData.detail || "Failed to fetch user profile"
+                );
+            }
+
+            setUser(userData);
+
+            return userData;
+        } finally {
+            setIsLoggingIn(false);
         }
-
-        const newToken = data.access_token;
-
-        localStorage.setItem("access_token", newToken);
-        setToken(newToken);
-
-        const profileResponse = await fetch(apiUrl("/users/me"), {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${newToken}`,
-            },
-        });
-
-        const userData = await profileResponse.json();
-
-        if (!profileResponse.ok) {
-            throw new Error(
-                userData.detail || "Failed to fetch user profile"
-            );
-        }
-
-        setUser(userData);
-
-        return userData;
     };
 
     const logout = () => {
@@ -108,6 +116,7 @@ export function AuthProvider({ children }) {
                 user,
                 isAuthenticated,
                 isLoading,
+                isLoggingIn,
                 login,
                 logout,
             }}

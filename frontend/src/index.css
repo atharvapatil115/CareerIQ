@@ -1948,3 +1948,114 @@ body {
     transform: rotate(360deg);
   }
 }
+
+.login-loading-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(10, 15, 30, 0.72);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.login-loading-card {
+    width: min(100%, 360px);
+    padding: 36px 28px;
+    text-align: center;
+    color: #f9fafb;
+    background: #111827;
+    border: 1px solid #374151;
+    border-radius: 20px;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+    animation: login-card-appear 0.25s ease-out;
+}
+
+.login-loading-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 22px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #312e81;
+    animation: login-icon-pulse 1.5s ease-in-out infinite;
+}
+
+.login-loading-lock {
+    font-size: 30px;
+}
+
+.login-loading-card h2 {
+    margin: 0 0 10px;
+    font-size: 23px;
+    font-weight: 650;
+}
+
+.login-loading-card p {
+    margin: 0 0 26px;
+    color: #cbd5e1;
+    font-size: 14px;
+}
+
+.login-progress-track {
+    width: 100%;
+    height: 7px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #374151;
+}
+
+.login-progress-bar {
+    width: 40%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #6366f1, #a5b4fc);
+    animation: login-progress-move 1.3s ease-in-out infinite;
+}
+
+.login-loading-note {
+    display: block;
+    margin-top: 18px;
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+@keyframes login-progress-move {
+    0% {
+        transform: translateX(-110%);
+    }
+
+    100% {
+        transform: translateX(280%);
+    }
+}
+
+@keyframes login-icon-pulse {
+    50% {
+        transform: scale(1.06);
+    }
+}
+
+@keyframes login-card-appear {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .login-progress-bar,
+    .login-loading-icon,
+    .login-loading-card {
+        animation: none;
+    }
+}

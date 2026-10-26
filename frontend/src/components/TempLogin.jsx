@@ -3,7 +3,8 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { useAuth } from "../Context/AuthContext";
 
 function TempLogin() {
-  const { login, isAuthenticated, isLoading } = useAuth();
+  const { login, isAuthenticated, isLoading,isLoggingIn } = useAuth();
+  
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -12,6 +13,7 @@ function TempLogin() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  
 
   const successMessage = location.state?.message;
 
