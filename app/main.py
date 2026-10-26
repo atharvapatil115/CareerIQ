@@ -6,9 +6,16 @@ from app.routers.dashboard import router as dashboard_router
 from app.routers.discoveredJobs import router as discovered_jobs_router
 from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
+import os
+
+allowed_origins = [
+    "http://localhost:5173",
+    "https://job-intelligence-indol.vercel.app",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
