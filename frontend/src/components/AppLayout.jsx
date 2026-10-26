@@ -1,23 +1,33 @@
-import { NavLink,Outlet,useNavigate } from "react-router";
+
+import { NavLink, Outlet, useNavigate } from "react-router";
 import { useAuth } from "../Context/AuthContext";
 
-function AppLayout()
-{
-    const {user,logout} = useAuth();
-    const navigate = useNavigate();
+function AppLayout() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
-    const handleLogout = () => {
-            logout();
-            navigate("/login");
-    }
-     return (
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
+  return (
     <div className="app-layout">
       <header className="top-header">
         <h2 className="app-title">Job Intelligence</h2>
 
-        <span className="welcome-text">
-          Welcome, {user?.name}
-        </span>
+        <div className="header-user">
+          <span className="welcome-text">
+            Welcome, {user?.name}
+          </span>
+
+          <button
+            className="logout-button header-logout"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+        </div>
       </header>
 
       <div className="app-body">
@@ -37,10 +47,6 @@ function AppLayout()
           <NavLink className="sidebar-link" to="/discover-jobs">
             Discover Jobs
           </NavLink>
-
-          <button className="logout-button" onClick={handleLogout}>
-            Logout
-          </button>
         </aside>
 
         <main className="main-content">
@@ -50,4 +56,5 @@ function AppLayout()
     </div>
   );
 }
+
 export default AppLayout;

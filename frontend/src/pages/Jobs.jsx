@@ -375,69 +375,136 @@ function Jobs() {
         </form>
       )}
 
+
       {jobs.length === 0 ? (
         <div className="empty-state">
           <h3>No applications yet</h3>
           <p>Your job applications will appear here.</p>
         </div>
       ) : (
-        <div className="jobs-table-container">
-          <table className="jobs-table">
-            <thead>
-              <tr>
-                <th>Company</th>
-                <th>Job Role</th>
-                <th>Location</th>
-                <th>Salary</th>
-                <th>Status</th>
-                <th>Applied On</th>
-                <th>Notes</th>
-                <th>Actions</th>
-
-              </tr>
-            </thead>
-
-            <tbody>
-              {jobs.map((job) => (
-                <tr key={job.id}>
-                  <td className="company-name">{job.company}</td>
-                  <td>{job.job_role}</td>
-                  <td>{job.location}</td>
-                  <td>{formatSalary(job.salary)}</td>
-
-                  <td>
-                    <span
-                      className={`status-badge status-${job.status.toLowerCase()}`}
-                    >
-                      {job.status}
-                    </span>
-                  </td>
-
-                  <td>{formatDate(job.date_applied)}</td>
-                  <td>{job.notes || "—"}</td>
-                  <td>
-                    <button
-                      type="button"
-                      className="delete-job-button"
-                      onClick={() => handleDelete(job.id)}
-                      disabled={deletingJobId === job.id}
-                    >
-                      {deletingJobId === job.id ? "Deleting..." : "Delete"}
-                    </button>
-                    <button
-                      type="button"
-                      className="edit-job-button"
-                      onClick={() => handleEdit(job)}
-                    >
-                      Edit
-                    </button>
-                  </td>
+        <>
+          {/* Desktop: existing table */}
+          <div className="jobs-table-container desktop-jobs-table">
+            <table className="jobs-table">
+              <thead>
+                <tr>
+                  <th>Company</th>
+                  <th>Job Role</th>
+                  <th>Location</th>
+                  <th>Salary</th>
+                  <th>Status</th>
+                  <th>Applied On</th>
+                  <th>Notes</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+
+              <tbody>
+                {jobs.map((job) => (
+                  <tr key={job.id}>
+                    <td className="company-name">{job.company}</td>
+                    <td>{job.job_role}</td>
+                    <td>{job.location}</td>
+                    <td>{formatSalary(job.salary)}</td>
+                    <td>
+                      <span
+                        className={`status-badge status-${job.status.toLowerCase()}`}
+                      >
+                        {job.status}
+                      </span>
+                    </td>
+                    <td>{formatDate(job.date_applied)}</td>
+                    <td>{job.notes || "—"}</td>
+                    <td>
+                      <div className="job-card-actions">
+                        <button
+                          type="button"
+                          className="edit-job-button"
+                          onClick={() => handleEdit(job)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          type="button"
+                          className="delete-job-button"
+                          onClick={() => handleDelete(job.id)}
+                          disabled={deletingJobId === job.id}
+                        >
+                          {deletingJobId === job.id ? "Deleting..." : "Delete"}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile: application cards */}
+          <div className="mobile-job-cards">
+            {jobs.map((job) => (
+              <article className="mobile-job-card" key={job.id}>
+                <div className="mobile-job-card-header">
+                  <div>
+                    <h3>{job.company}</h3>
+                    <p>{job.job_role}</p>
+                  </div>
+
+                  <span
+                    className={`status-badge status-${job.status.toLowerCase()}`}
+                  >
+                    {job.status}
+                  </span>
+                </div>
+
+                <div className="mobile-job-details">
+                  <div>
+                    <span>Location</span>
+                    <strong>{job.location || "Not specified"}</strong>
+                  </div>
+
+                  <div>
+                    <span>Salary</span>
+                    <strong>{formatSalary(job.salary)}</strong>
+                  </div>
+
+                  <div>
+                    <span>Applied on</span>
+                    <strong>{formatDate(job.date_applied)}</strong>
+                  </div>
+                </div>
+
+                {job.notes && (
+                  <div className="mobile-job-notes">
+                    <span>Notes</span>
+                    <p>{job.notes}</p>
+                  </div>
+                )}
+
+                <div className="job-card-actions">
+                  <button
+                    type="button"
+                    className="edit-job-button"
+                    onClick={() => handleEdit(job)}
+                  >
+                    Edit
+                  </button>
+
+                  <button
+                    type="button"
+                    className="delete-job-button"
+                    onClick={() => handleDelete(job.id)}
+                    disabled={deletingJobId === job.id}
+                  >
+                    {deletingJobId === job.id ? "Deleting..." : "Delete"}
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+        </>
       )}
+
     </section>
   );
 }
