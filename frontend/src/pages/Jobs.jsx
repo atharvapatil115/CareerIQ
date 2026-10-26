@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../Context/AuthContext";
 import { apiUrl } from "../api";
+import Loader from "../components/Loader";
+
 
 const initialFormData = {
   company: "",
@@ -233,10 +235,10 @@ function Jobs() {
     setShowForm(true);
   }
 
-  if (loading) {
-    return <p>Loading your jobs...</p>;
-  }
-
+ if (loading) {
+       return <Loader message="Loading your Jobs..." />;
+     }
+ 
   if (error) {
     return <p className="error-message">{error}</p>;
   }

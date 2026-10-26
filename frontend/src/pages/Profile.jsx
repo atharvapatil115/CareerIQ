@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "../Context/AuthContext";
 import { apiUrl } from "../api";
+import Loader from "../components/Loader";
+
 
 
 async function getErrorMessage(response, fallback) {
@@ -247,8 +249,8 @@ function Profile() {
         }
     }
 
-    if (loading) {
-        return <p>Loading your profile...</p>;
+     if (loading) {
+      return <Loader message="Loading your Profile..." />;
     }
 
     if (loadError) {
