@@ -15,7 +15,7 @@ function DiscoverJobs() {
       setError("");
       setLoading(true);
 
-const response = await fetch(apiUrl("/discovered-jobs/"));
+      const response = await fetch(apiUrl("/discovered-jobs/"));
       if (!response.ok) {
         throw new Error("Could not load jobs. Please try again.");
       }
