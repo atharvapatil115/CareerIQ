@@ -1,8 +1,11 @@
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
-import os 
+import os
+
 load_dotenv()
+
 DATABASE_URL = os.getenv("DATABASE_URL")
 
 if DATABASE_URL and DATABASE_URL.startswith("postgresql://"):
@@ -12,8 +15,11 @@ if DATABASE_URL and DATABASE_URL.startswith("postgresql://"):
         1
     )
 
-
-engine = create_engine(DATABASE_URL)
+engine = create_engine(
+    DATABASE_URL,
+    pool_pre_ping=True,
+    pool_recycle=300,
+)
 
 SessionLocal = sessionmaker(bind=engine)
 

@@ -47,6 +47,9 @@ function AppLayout() {
           <NavLink className="sidebar-link" to="/discover-jobs">
             Discover Jobs
           </NavLink>
+          <NavLink className="sidebar-link" to="/resume-analyzer">
+            Resume Analyzer
+          </NavLink>
         </aside>
 
         <main className="main-content">

@@ -3,7 +3,6 @@ import { Routes, Route, Navigate } from "react-router";
 
 import TempLogin from "./components/TempLogin";
 import Register from "./components/Register";
-import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AppLayout from "./components/AppLayout";
 import { useAuth } from "./Context/AuthContext";
@@ -12,62 +11,48 @@ import Jobs from "./pages/Jobs";
 import Profile from "./pages/Profile";
 import DiscoverJobs from "./pages/DiscoverJobs";
 import LoginLoadingOverlay from "./components/LoginLoadingOverlay";
-
+import ResumeAnalyzer from "./pages/ResumeAnalyzer";
 
 function App() {
   const { isLoggingIn } = useAuth();
+
   return (
     <>
-    <Routes>
-      {/* Default route */}
-      <Route
-        path="/"
-        element={<Navigate to="/login" replace />}
-      />
-
-      {/* Public routes */}
-      <Route
-        path="/login"
-        element={<TempLogin />}
-      />
-
-      <Route
-        path="/register"
-        element={<Register />}
-      />
-
-      {/* Protected routes with shared layout */}
-      <Route
-        element={
-          <ProtectedRoute>
-            <AppLayout />
-          </ProtectedRoute>
-        }
-      >
+      <Routes>
+        {/* Default route */}
         <Route
-          path="/dashboard"
-          element={<Dashboard />}
+          path="/"
+          element={<Navigate to="/login" replace />}
         />
 
-        <Route
-          path="/jobs"
-          element={<Jobs />}
-        />
+        {/* Public routes */}
+        <Route path="/login" element={<TempLogin />} />
+        <Route path="/register" element={<Register />} />
 
+        {/* Protected routes with shared layout */}
         <Route
-          path="/profile"
-          element={<Profile />}
-        />
+          element={
+            <ProtectedRoute>
+              <AppLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/jobs" element={<Jobs />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route
+            path="/discover-jobs"
+            element={<DiscoverJobs />}
+          />
+          <Route
+            path="/resume-analyzer"
+            element={<ResumeAnalyzer />}
+          />
+        </Route>
+      </Routes>
 
-        <Route
-          path="/discover-jobs"
-          element={<DiscoverJobs />}
-        />
-      </Route>
-    </Routes>
-       {isLoggingIn && <LoginLoadingOverlay />}
-       </>
-    
+      {isLoggingIn && <LoginLoadingOverlay />}
+    </>
   );
 }
 
