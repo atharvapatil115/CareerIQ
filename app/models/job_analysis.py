@@ -1,6 +1,9 @@
 
 from datetime import datetime
 from decimal import Decimal
+from sqlalchemy import Boolean, Numeric
+from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy import Text
 
 from sqlalchemy import (
     Integer,
@@ -102,3 +105,32 @@ class JobAnalysis(Base):
         onupdate=func.now(),
         nullable=False,
     )
+    
+    overall_resume_score: Mapped[Decimal | None] = mapped_column(
+        Numeric(5, 2),
+        nullable=True,
+    )
+
+    ats_score: Mapped[Decimal | None] = mapped_column(
+        Numeric(5, 2),
+        nullable=True,
+    )
+
+    ats_friendly: Mapped[bool | None] = mapped_column(
+        Boolean,
+        nullable=True,
+    )
+
+    ats_issues: Mapped[list] = mapped_column(
+        JSONB,
+        nullable=False,
+        default=list,
+        server_default="[]",
+    )
+    job_description: Mapped[str | None] = mapped_column(
+    Text,
+    nullable=True,
+)
+
+
+
