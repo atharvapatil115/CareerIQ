@@ -52,7 +52,7 @@ class JobAnalysis(Base):
 
     job_id: Mapped[int] = mapped_column(
         ForeignKey("jobs.id", ondelete="CASCADE"),
-        nullable=False,
+        nullable=True,
     )
 
     match_score: Mapped[Decimal | None] = mapped_column(
