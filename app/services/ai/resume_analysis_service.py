@@ -80,8 +80,7 @@ def analyze_resume(
     )
 
     try:
-        db.add(job)
-        db.flush()  # Assigns job.id without committing yet.
+         # Assigns job.id without committing yet.
 
         # Store both types of recommendations in the existing JSONB field.
         recommendations = [
