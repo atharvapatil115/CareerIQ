@@ -14,7 +14,7 @@ function AppLayout() {
   return (
     <div className="app-layout">
       <header className="top-header">
-        <h2 className="app-title">Job Intelligence</h2>
+        <h2 className="app-title">CareerIQ</h2>
 
         <div className="header-user">
           <span className="welcome-text">

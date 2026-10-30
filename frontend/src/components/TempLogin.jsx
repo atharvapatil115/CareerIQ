@@ -44,7 +44,7 @@ function TempLogin() {
         <aside className="auth-showcase">
           <Link to="/login" className="auth-brand">
             <span className="auth-brand-mark">JI</span>
-            <span>Job Intelligence</span>
+            <span>CareerIQ</span>
           </Link>
 
           <div className="auth-showcase-content">
