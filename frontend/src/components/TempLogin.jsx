@@ -43,7 +43,7 @@ function TempLogin() {
       <section className="auth-shell">
         <aside className="auth-showcase">
           <Link to="/login" className="auth-brand">
-            <span className="auth-brand-mark">JI</span>
+            <span className="auth-brand-mark">CQ</span>
             <span>CareerIQ</span>
           </Link>
 
